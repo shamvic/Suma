@@ -20,7 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 //import java.util.Random
 
-
+// hay que parar el timer al apretar el botón Done
 class AdditionActivity : AppCompatActivity() {
 
     private lateinit var tvNumber1: TextView
@@ -39,6 +39,7 @@ class AdditionActivity : AppCompatActivity() {
 
     private  var countDownTimer: CountDownTimer?=null
     private  var isTimerRunning = false
+
 
     private var mediaPlayer: MediaPlayer? = null
     private var beepNew:Int=0
@@ -152,6 +153,7 @@ class AdditionActivity : AppCompatActivity() {
         //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  BUTTON DONE  XXXXXXXXXXXXXXXXXXXXXXXXXX
 
         btnDone.setOnClickListener {
+
 
             tvCorrectSolution.setVisibility(View.VISIBLE)
 
@@ -275,6 +277,7 @@ class AdditionActivity : AppCompatActivity() {
             // Timer is already running, no need to start a new one
             // Таймер уже запущен, новый запускать не нужно
             //etSolution.setText("Runnig")
+
             return
         }
         countDownTimer = object : CountDownTimer(durationInMillis, 1000) {
