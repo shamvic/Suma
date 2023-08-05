@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/background_app"
+    android:padding="20dp"
+    tools:context=".SettingsAddActivity">
+
+    <TextView
+        android:id="@+id/tvNumbersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/number_of_members"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvNumbers"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"  />
+
+    <TextView
+        android:id="@+id/tvNumbers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="6"
+        app:layout_constraintStart_toEndOf="@+id/tvNumbersText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"  />
+
+    <SeekBar
+        android:id="@+id/seekBarNum"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginVertical="30dp"
+        android:layout_marginTop="28dp"
+        android:max="15"
+        android:min="3"
+        android:progress="6"
+        android:thumb="@drawable/thumb"
+        android:progressDrawable="@drawable/progress_verde_amarillo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumbersText" /><!-- set custom progress drawable for the progress -->
+
+
+    <TextView
+        android:id="@+id/tvSecondsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/rate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvSeconds"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarNum"
+        android:layout_marginTop="30dp" />
+    <TextView
+        android:id="@+id/tvSeconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="8"
+        app:layout_constraintStart_toEndOf="@+id/tvSecondsText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarNum"
+        android:layout_marginTop="30dp" />
+
+    <SeekBar
+        android:id="@+id/seekBarSeconds"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginVertical="30dp"
+        android:layout_marginTop="28dp"
+        android:max="10"
+        android:min="3"
+        android:progress="8"
+        android:thumb="@drawable/thumb"
+        android:progressDrawable="@drawable/progress_amarillo_verde"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSecondsText" />
+
+    <Button
+        android:id="@+id/btnSettingsDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/settings_done"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSettingsCancel"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSeconds"
+        android:layout_marginTop="50dp"
+        />
+
+    <Button
+        android:id="@+id/btnSettingsCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/settings_cancel"
+        app:layout_constraintStart_toEndOf="@id/btnSettingsDone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSeconds"
+        android:layout_marginTop="50dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
