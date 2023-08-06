@@ -93,34 +93,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSecondsText" />
 
+
     <Button
         android:id="@+id/btnSettingsDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
+        android:layout_marginBottom="128dp"
+        android:text="@string/settings_done"
         android:textColor="@color/text"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="@string/settings_done"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnSettingsCancel"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarSeconds"
-        android:layout_marginTop="50dp"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnSettingsCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
+        android:layout_marginBottom="128dp"
+        android:text="@string/settings_cancel"
         android:textColor="@color/text"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="@string/settings_cancel"
-        app:layout_constraintStart_toEndOf="@id/btnSettingsDone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarSeconds"
-        android:layout_marginTop="50dp"
-        />
+        app:layout_constraintStart_toEndOf="@id/btnSettingsDone"
+        tools:ignore="MissingConstraints" />
+
+    <Switch
+        android:id="@+id/swNumDig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSeconds" />
+
+    <TextView
+        android:id="@+id/tv1N"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="32dp"
+        android:text="N"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/swNumDig"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSeconds" />
+
+    <TextView
+        android:id="@+id/tv2N"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="60dp"
+        android:text="NN"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/swNumDig"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSeconds" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

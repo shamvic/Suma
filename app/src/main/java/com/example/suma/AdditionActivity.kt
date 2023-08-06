@@ -18,9 +18,12 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import java.util.Locale
+
 //import java.util.Random
 
 // hay que parar el timer al apretar el botón Done
+
 class AdditionActivity : AppCompatActivity() {
 
     private lateinit var tvNumber1: TextView
@@ -62,6 +65,9 @@ class AdditionActivity : AppCompatActivity() {
     private var numSequence:Int=6       //total number of add
     private var delayInSeconds:Long=3
     private var timeInSeconds:Long=9
+    private var swNumDig:Boolean=false
+
+    private val firsNumSeconds:Long=3
     private var introDelay:Boolean=false
 
 
@@ -94,6 +100,8 @@ class AdditionActivity : AppCompatActivity() {
         beepNew = resources.getIdentifier("beep_02", "raw", packageName)
         beepError = resources.getIdentifier("beep_10", "raw",packageName)
 
+        // initialize the text to speech manager class
+        TextToSpeechManager.init(this)
 
         // habilitar teclado numerico con - . ,
         etSolution.setRawInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED)
@@ -106,16 +114,23 @@ class AdditionActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK){
                 val number = result.data?.getIntExtra("numbers",6)
                 val seconds = result.data?.getIntExtra("seconds",9)
+                val numDig = result.data?.getBooleanExtra("switch",false)
                 Log.d("Launcher", "Result from Activity2 $number")
                 Log.d("Launcher", "Result from Activity2 $seconds")
+                Log.d("Launcher", "Result from Activity2 $numDig")
+
                 if (number != null) {
                     numSequence = number
                 }
                 if (seconds !=null){
                     timeInSeconds=seconds.toLong()
                 }
+                if (numDig !=null){
+                    swNumDig=numDig
+                }
                 Log.d("Launcher", "Result numSequence = $numSequence")
                 Log.d("Launcher", "Result timeInSeconds= $timeInSeconds")
+                Log.d("Launcher", "Result switshNumDig= $swNumDig")
             }else{
                 Log.d("Launcher", "Result from Activity2: CANCELED")
             }
@@ -184,6 +199,8 @@ class AdditionActivity : AppCompatActivity() {
 
             }
 
+            tvNumber1.text="sum"
+            tvNumber2.text="n"
 
         }
 
@@ -224,10 +241,10 @@ class AdditionActivity : AppCompatActivity() {
     // XXXXXXXXXXXXXXXXX BEGIN SEQUENCE  XXXXXXXX
     private fun beginNumSequence() {
         initFirstNumber()
-        initSecondNumber()
+        //initSecondNumber()
         tvNumber1.setTextColor(ContextCompat.getColor(this, R.color.green_700))
-        tvNumber2.setTextColor(ContextCompat.getColor(this, R.color.green_700))
-        startTimer(timeInSeconds*1000)
+        //tvNumber2.setTextColor(ContextCompat.getColor(this, R.color.green_700))
+        startTimer(firsNumSeconds*1000)
         Toast.makeText(this,"Ok!",Toast.LENGTH_SHORT).show()
 
 
@@ -235,16 +252,51 @@ class AdditionActivity : AppCompatActivity() {
 
 
     private fun initFirstNumber() {
-        num1 = getRandom()
+        if (!swNumDig) num1 = getRandom()
+        else num1=getRandom2N()
+
         correctSum=num1
 
         tvNumber1.text = num1.toString()
+
+        val toSpeach = num1.toString()
+
+        speech(toSpeach)
+
+
+
     }
 
+    private fun speech(toSpeech:String){
 
+         val toSpeak = toSpeech
+        // set the language to be used for the speech conversion
+        //val language = Locale("en", "US")
+        val language = Locale("ru", "RU")
+        //val language = Locale("es", "ES")
+
+        // invoke the method with the text and the language
+        TextToSpeechManager.instance.speak(toSpeak, language)
+    }
     private fun initSecondNumber() {
-        num2 = getRandom()
+
+        if (!swNumDig) num2 = getRandom()
+        else num2=getRandom2N()
+
         tvNumber2.text = num2.toString()
+
+        var toSpeech:String=""
+        if (num2>0){
+            toSpeech="+ ${num2.toString()}"
+        }
+        else {
+            toSpeech = num2.toString()
+        }
+        speech(toSpeech)
+
+      //  val toSpeech = num2.toString()
+      //  speech(toSpeech)
+
     }
 
     //  xxxxxxxxxxxxxxxxxxxxxxx  Random Number  xxxxxxxxxxxxxxxxxxxxxxx
@@ -252,7 +304,7 @@ class AdditionActivity : AppCompatActivity() {
         var randomNumber: Int
 
         do {
-            randomNumber = (Math.random() * 199).toInt() - 99 // Genera números aleatorios entre -99 y +99
+            randomNumber = (Math.random() * 19).toInt() - 9 // Genera números aleatorios entre -99 y +99
             //}  while (randomNumber == -1 || randomNumber == 0 || randomNumber == 1)
         }  while (invalidRange(randomNumber))
 
@@ -261,7 +313,7 @@ class AdditionActivity : AppCompatActivity() {
 
 
     private fun invalidRange(randNumber:Int):Boolean {    // EXCLUDING  from -11 to +11
-        if (randNumber > -11 && randNumber < 12) {
+        if (randNumber > -1 && randNumber < 2) {
             return true
         } else {
             return false
@@ -269,6 +321,29 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     //  xxxxxxxxxxxxxxxxxxxxxxx  END Random Number  xxxxxxxxxxxxxxxxxxxxxxx
+
+    //  xxxxxxxxxxxxxxxxxxxxxxx  Random Number 2N xxxxxxxxxxxxxxxxxxxxxxx
+    private fun getRandom2N(): Int {                  // RANDOM FROM -99 TO 99 (EXCLUDING -11-+11)
+        var randomNumber: Int
+
+        do {
+            randomNumber = (Math.random() * 199).toInt() - 99 // Genera números aleatorios entre -99 y +99
+            //}  while (randomNumber == -1 || randomNumber == 0 || randomNumber == 1)
+        }  while (invalidRange2N(randomNumber))
+
+        return randomNumber
+    }
+
+
+    private fun invalidRange2N(randNumber:Int):Boolean {    // EXCLUDING  from -11 to +11
+        if (randNumber > -11 && randNumber < 12) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    //  xxxxxxxxxxxxxxxxxxxxxxx  END Random Number 2N  xxxxxxxxxxxxxxxxxxxxxxx
 
     //  XXXXXXXXXXXXXXX   TIMER - TEMPORIZADOR  XXXXXXXXXXXXXXX
     private fun startTimer(durationInMillis: Long) {
@@ -306,7 +381,7 @@ class AdditionActivity : AppCompatActivity() {
             override fun onFinish() {
                 //tvNumber1.setText("Timer Finished")
                 //tvTimer.setText("Timer Finished")
-                playBeep(beepNew)
+               // playBeep(beepNew)         // pitido cuando termina el tiempo
                 isTimerRunning = false
                 Log.d(tag,"currSequence0 = $currSequence")
                 num1=num1+num2
@@ -322,7 +397,7 @@ class AdditionActivity : AppCompatActivity() {
                 }else if (currSequence > numSequence){
                     //isTimerRunning = false
                     tvCorrectSolution.text=num1.toString()
-
+                    playBeep(beepNew)   //pitido al terminar sumar
                     //tvCorrectSolution.setVisibility(View.VISIBLE)
                     Log.d(tag,"tvCorrectSolution=$tvCorrectSolution")
                     Log.d(tag,"isTimerRunning=${isTimerRunning.toString()}")
